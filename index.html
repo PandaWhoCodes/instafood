@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+
+</head>
+
+<body>
+
+<div class="container">
+  <p class="flow-text">ZomatoFood</p>
+  <div id="stuffs">
+
+  </div>
+
+
+
+</div>
+
+  <script type="text/javascript">
+    let url = "https://developers.zomato.com/api/v2.1/search?q=Tidel%20Park%20Chennai";
+
+    function run() {
+      axios.get(
+          url, {
+            headers: {
+              "user-key": "bfe28d93b4f99052a99dd84da7da39dc"
+            }
+          }
+        )
+        .then((response) => {
+            var response = response.data;
+            console.log(response);
+
+            for (var i = 0; i < 7; i++) {
+              let temp = document.getElementById("stuffs").innerHTML;
+              document.getElementById("stuffs").innerHTML = temp +`
+
+
+              <div class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                  <img class="activator" src="`+response.restaurants[i].restaurant.featured_image+`">
+                </div>
+                <div class="card-content">
+                  <span class="card-title activator grey-text text-darken-4">`+response.restaurants[i].restaurant.name+`</span>
+                  <p>`+response.restaurants[i].restaurant.cuisines+`</a></p>
+                </div>
+              </div>
+
+
+              `;
+            }
+          },
+          (error) => {
+            var status = error.response.status;
+            console.log(status);
+          }
+        );
+    }
+    run();
+  </script>
+</body>
+
+</html>
