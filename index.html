@@ -15,6 +15,12 @@
 
 <div class="container">
   <p class="flow-text">ZomatoFood</p>
+
+  <div class="input-field col s6">
+  <input placeholder="Type your Location + City" id="search" type="text">
+  <a class="waves-effect waves-light btn-small" id="myBtn">Search</a>
+
+</div>
   <div id="stuffs">
 
   </div>
@@ -24,9 +30,13 @@
 </div>
 
   <script type="text/javascript">
-    let url = "https://developers.zomato.com/api/v2.1/search?q=Tidel%20Park%20Chennai";
+    document.getElementById("myBtn").addEventListener("click", function(){
+      document.getElementById("stuffs").innerHTML = " ";
+      let temp1 = document.getElementById("search").value;
+      console.log(temp1);
 
-    function run() {
+      let url = "https://developers.zomato.com/api/v2.1/search?q="+temp1;
+console.log(url);
       axios.get(
           url, {
             headers: {
@@ -35,7 +45,7 @@
           }
         )
         .then((response) => {
-            var response = response.data;
+            let res = response.data;
             console.log(response);
 
             for (var i = 0; i < 7; i++) {
@@ -45,11 +55,11 @@
 
               <div class="card">
                 <div class="card-image waves-effect waves-block waves-light">
-                  <img class="activator" src="`+response.restaurants[i].restaurant.featured_image+`">
+                  <img class="activator" src="`+res.restaurants[i].restaurant.featured_image+`">
                 </div>
                 <div class="card-content">
-                  <span class="card-title activator grey-text text-darken-4">`+response.restaurants[i].restaurant.name+`</span>
-                  <p>`+response.restaurants[i].restaurant.cuisines+`</a></p>
+                  <span class="card-title activator grey-text text-darken-4">`+res.restaurants[i].restaurant.name+`</span>
+                  <p>`+res.restaurants[i].restaurant.cuisines+`</a></p>
                 </div>
               </div>
 
@@ -62,8 +72,8 @@
             console.log(status);
           }
         );
-    }
-    run();
+
+    });
   </script>
 </body>
 
